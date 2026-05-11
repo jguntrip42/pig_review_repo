@@ -10,7 +10,7 @@ import numpy as np
 
 
 
-def piglet_val_iteration(S,A,P,R,T,epsilon=0.001):
+def piglet_val_iteration(S,A,P,R,T,epsilon):
     
     """S is a list of states;
     A is a list of actions;

@@ -47,7 +47,7 @@ def R_piglet(s_new,s,a):
 
 def test_1():
     
-    new_policy,val_map_0,val_dict_0 = piglet_val_iteration(piglet_states,piglet_actions,P_piglet,R_piglet,target,epsilon=0.00001)
+    new_policy,val_map_0,val_dict_0 = piglet_val_iteration(piglet_states,piglet_actions,P_piglet,R_piglet,target,0.00001)
     
     correct_val_map = {(0, 0, 0): 0.5714285969734192, (0, 0, 1): 0.7142857313156128, 
                        (0, 1, 0): 0.4000133275985718, (0, 1, 1): 0.6000075936317444, 
