@@ -109,8 +109,8 @@ piglet_actions = ["H","F"]
 target = 2
 
 
-
 def P_piglet(s_new,s,a):
+    """Returns probabilities for taking action a in state s and transitioning to state s_new"""
     
     if s != "WIN":
         if a == "F":
@@ -143,12 +143,12 @@ def R_piglet(s_new,s,a):
     
     return r
 
-new_policy,val_map_0,val_dict_0 = piglet_val_iteration(piglet_states,piglet_actions,P_piglet,R_piglet,epsilon=0.0001)
+new_policy,val_map_0,val_dict_0 = piglet_val_iteration(piglet_states,piglet_actions,P_piglet,R_piglet,epsilon=0.00001)
 
 
 import matplotlib.pyplot as plt
 
-iteration_nums = [i for i in range(1,21,1)]
+iteration_nums = [i for i in range(1,27,1)]
 
 
 fig, ax_1 = plt.subplots()
