@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pig_vi"
+version = "0.1"
+maintainers = [
+  { name="Joseph Guntrip", email="j.guntrip@lancaster.ac.uk" },
+  { name="Kyle Russell", email="k.russell4@lancaster.ac.uk" },
+  { name="Tina Sardashti", email="t.sardashti@lancaster.ac.uk" },
+  { name="Jay Styles", email="j.styles@lancaster.ac.uk" },
+]
+authors = [
+  { name="Joseph Guntrip", email="j.guntrip@lancaster.ac.uk" },
+  { name="Kyle Russell", email="k.russell4@lancaster.ac.uk" },
+  { name="Tina Sardashti", email="t.sardashti@lancaster.ac.uk" },
+  { name="Jay Styles", email="j.styles@lancaster.ac.uk" },
+]
+description = "Value iteration algorithms designed to compute the optimal policy for the game Pig"
+requires-python = ">=3.13.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy",
+    "matplotlib"
+]
+
+[project.urls]
+homepage = "https://github.com/jguntrip42/pig_review_repo.git"	
