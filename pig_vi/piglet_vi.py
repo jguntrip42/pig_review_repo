@@ -10,13 +10,14 @@ import numpy as np
 
 
 
-def piglet_val_iteration(S,A,P,R,epsilon=0.001):
+def piglet_val_iteration(S,A,P,R,T,epsilon=0.001):
     
     """S is a list of states;
     A is a list of actions;
     P is the state transition function specifying P(s'|s,a);
     R is a reward function R(s'|s,a);
-    gamma is the discount factor fixed to 1 in this case (we care only for eventual win regardless of score);
+    T is the target value;
+    the discount factor fixed to 1 in this case (we care only for eventual win regardless of score);
     epsilon is the maximum difference we consider for a solution for the value map to have converged"""
     
 
@@ -50,7 +51,7 @@ def piglet_val_iteration(S,A,P,R,epsilon=0.001):
                     val = 0
             return val
         
-        if (s[0]+s[2]) != target:
+        if (s[0]+s[2]) != T:
             s_new_m = (s[1],s[0]+s[2]*(int(a == "H")),0)
         else:
             s_new_m = (0,0,0) # We set this arbitrarily to ensure the code is well-defined (the opponents state is unimportant if the player can win)

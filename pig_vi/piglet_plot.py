@@ -1,6 +1,6 @@
 
 
-from pig_vi import *
+from pig_vi.piglet_vi import *
 
 piglet_states = [(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,0,0),(1,1,0),(1,0,1),(1,1,1),(0,0,2),(0,1,2),"WIN"]
 piglet_actions = ["H","F"]
@@ -44,7 +44,7 @@ def R_piglet(s_new,s,a):
 
 
 
-new_policy,val_map_0,val_dict_0 = piglet_val_iteration(piglet_states,piglet_actions,P_piglet,R_piglet,epsilon=0.00001)
+new_policy,val_map_0,val_dict_0 = piglet_val_iteration(piglet_states,piglet_actions,P_piglet,R_piglet,target,epsilon=0.00001)
 
 import matplotlib.pyplot as plt
 
