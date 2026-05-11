@@ -9,15 +9,14 @@ Created on Fri Mar 13 14:13:12 2026
 import numpy as np
 
 
-# I think the problem in this version is that there is no losing state
 
-def val_iteration(S,A,P,R,epsilon=0.001):
+def piglet_val_iteration(S,A,P,R,epsilon=0.001):
     
     """S is a list of states;
     A is a list of actions;
     P is the state transition function specifying P(s'|s,a);
     R is a reward function R(s'|s,a);
-    gamma is the discount factor fixed to 1 in this case (larger value means we prioritise exploration over exploitation);
+    gamma is the discount factor fixed to 1 in this case (we care only for eventual win regardless of score);
     epsilon is the maximum difference we consider for a solution for the value map to have converged"""
     
 
@@ -41,6 +40,7 @@ def val_iteration(S,A,P,R,epsilon=0.001):
         S_new = S_valid_dict[s]
         
         def indx(s_val):
+            """Indicator function to control the value (probability of winning) when turn switches to opponent"""
             if s_val == "WIN":
                 val = 1
             else:
@@ -53,7 +53,7 @@ def val_iteration(S,A,P,R,epsilon=0.001):
         if (s[0]+s[2]) != target:
             s_new_m = (s[1],s[0]+s[2]*(int(a == "H")),0)
         else:
-            s_new_m = (0,0,0)
+            s_new_m = (0,0,0) # We set this arbitrarily to ensure the code is well-defined (the opponents state is unimportant if the player can win)
         
         
         q_val = sum([(P(s_new,s,a)*(R(s_new,s,a) + val_func[s_new]*indx(s_new) + (1 - val_func[s_new_m])*(1 - indx(s_new)))) for s_new in S_new])
@@ -61,9 +61,9 @@ def val_iteration(S,A,P,R,epsilon=0.001):
         return q_val
         
     
-    val_map = {s:0 for s in S}
-    policy_map = {s:None for s in S}
-    val_dict = {s:[val_map[s]] for s in S}
+    val_map = {s:0 for s in S} # Initialise values to be zero for each state
+    policy_map = {s:None for s in S} # Initialise empty policy
+    val_dict = {s:[val_map[s]] for s in S} # Tracks the values of each state as they are being updated
     
     val_maps = [val_map]
     
@@ -80,7 +80,7 @@ def val_iteration(S,A,P,R,epsilon=0.001):
             
             A_valid = list(A_valid_dict[s]) # Get possible actions
 
-            if A_valid != []: # Update value only with respect to states we can access from s
+            if A_valid != []: # Update value only with respect to states we can access from s using q function
                 val_map_k[s] = max([q_func(s,a,val_maps[-1]) for a in A_valid])
         
         val_maps.append(val_map_k)
@@ -98,13 +98,9 @@ def val_iteration(S,A,P,R,epsilon=0.001):
             policy_map[s] = A_valid[a_index]
 
 
-
     return policy_map,val_maps[-1],val_dict
 
 
-
-from functools import partial
-from itertools import product
 
 
 piglet_states = [(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,0,0),(1,1,0),(1,0,1),(1,1,1),(0,0,2),(0,1,2),"WIN"]
@@ -118,14 +114,16 @@ def P_piglet(s_new,s,a):
     
     if s != "WIN":
         if a == "F":
-            if (s[0] == s_new[0] and s[1] == s_new[1] and s_new[2] == 0) or (s[0] == s_new[0] and s[1] == s_new[1] and (s[2]+1) == s_new[2]):
+            if (s[0] == s_new[0] and s[1] == s_new[1] and s_new[2] == 0): # Case where we obtain tails
+                p = 0.5
+            elif (s[0] == s_new[0] and s[1] == s_new[1] and (s[2]+1) == s_new[2]): # Case where we obtain heads
                 p = 0.5
             else:
                 p = 0
         elif a == "H":
-            if ((s[0]+s[2]) == s_new[0]) and (s[1] == s_new[1]) and (s_new[2] == 0) and ((s[2]+s[0]) != target):
+            if ((s[0]+s[2]) == s_new[0]) and (s[1] == s_new[1]) and (s_new[2] == 0) and ((s[2]+s[0]) != target): # Case where one holds but doesn't win immediately
                 p = 1
-            elif ((s[2]+s[0]) == target) and (s_new == "WIN"):
+            elif ((s[2]+s[0]) == target) and (s_new == "WIN"): # Case where holding will inveitably cause the player to win
                 p = 1
             else:
                 p = 0
@@ -136,22 +134,19 @@ def P_piglet(s_new,s,a):
 
 
 def R_piglet(s_new,s,a):
+    """Returns the reward for performing action a and moving from state s to state s_new"""
     
-    # We want to reward only winning, so set reward to 1 for all transitions from nonwinning states to winning states, and zero for all others
-    
-    if ((s_new == "WIN") and (a == "H") and ((s[2]+s[0]) == target)): # Reward only when current player wins (swap the indices in the triple)
+    if ((s_new == "WIN") and (a == "H") and ((s[2]+s[0]) == target)): # Reward only when player wins
         r = 1
     else:
         r = 0
     
     return r
 
-new_policy,val_map_0,val_dict_0 = val_iteration(piglet_states,piglet_actions,P_piglet,R_piglet,epsilon=0.0001)
+new_policy,val_map_0,val_dict_0 = piglet_val_iteration(piglet_states,piglet_actions,P_piglet,R_piglet,epsilon=0.0001)
 
 
 import matplotlib.pyplot as plt
-
-
 
 iteration_nums = [i for i in range(1,21,1)]
 
