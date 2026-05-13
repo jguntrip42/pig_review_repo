@@ -2,7 +2,7 @@ from pig import Pig
 import pickle 
 
 game = Pig(target=100)
-game.value_iteration(tolerance=1e-2, max_iterations=10000)
+game.value_iteration(tolerance=1e-4, max_iterations=10000)
 
 print("Pig target:", game.target)
 print("Value at (0, 0, 0):", game.get_value(0, 0, 0))
