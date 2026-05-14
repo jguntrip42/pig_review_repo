@@ -119,7 +119,7 @@ def strategy_factory_1(M : int,target_score : int) -> callable:
 
 
 # Load pickle file
-with open("pig_results.pkl", "rb") as f:
+with open("pig_vi_results.pkl", "rb") as f:
     results = pickle.load(f)
 
 target = results["target"]
@@ -181,7 +181,7 @@ def replications(sim_func : callable, N : int, target_score : int, randomiser : 
 # Run simulation
 
 T = 100 # Target score
-R = 1000000 # Number of replications
+R = 1000 # Number of replications (figures in paper obtained from setting R = 10**6)
 
 
 strat_hold_20 = strategy_factory_1(20,T)
