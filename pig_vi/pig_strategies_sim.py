@@ -118,40 +118,6 @@ def strategy_factory_1(M : int,target_score : int) -> callable:
 
 
 
-# Load pickle file
-with open("pig_results.pkl", "rb") as f:
-    results = pickle.load(f)
-
-target = results["target"]
-states = results["states"]
-values = results["values"]
-policy = results["policy"]
-
-def optimal_strategy_fact() -> callable:
-
-    def strat_opt(score_hist : tuple[tuple,int]) -> bool:
-        """Rolls and holds in accordance with the optimal strategy; 
-        note that this strategy is only suitable for two player games and when the target score is exactly 100"""
-        
-        
-        play_hist, current_score, all_scores = score_hist
-        turn_score = sum(play_hist) 
-        opponents_score = all_scores[1-all_scores.index(current_score)] # Note the 1- switches the index of the player to the opponent when there are two players
-        
-        if (turn_score + current_score) >= 100:
-            val = False
-        else:
-            if policy[(current_score,opponents_score,turn_score)] == 'roll':
-                val = True
-            else:
-                val = False
-                
-        return val
-    
-    strat_opt.__name__ = "opt_strat"
-
-    return strat_opt
-
 
 
 def replications(sim_func : callable, N : int, target_score : int, randomiser : bool, strategies : tuple[callable, ...]) -> dict:
@@ -176,19 +142,3 @@ def replications(sim_func : callable, N : int, target_score : int, randomiser : 
     return summary_dict
     
 
-
-
-# Run simulation
-
-T = 100 # Target score
-R = 1000000 # Number of replications
-
-
-strat_hold_20 = strategy_factory_1(20,T)
-opt_strat_1 = optimal_strategy_fact()
-opt_strat_2 = optimal_strategy_fact()
-
-rep_results_1 = replications(pig_sim, R, T, False, (opt_strat_1,opt_strat_2))
-rep_results_2 = replications(pig_sim, R, T, False, (opt_strat_1,strat_hold_20))
-rep_results_3 = replications(pig_sim, R, T, False, (strat_hold_20,opt_strat_1))
-rep_results_4 = replications(pig_sim, R, T, True, (strat_hold_20,opt_strat_1))
