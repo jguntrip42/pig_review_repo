@@ -176,19 +176,3 @@ def replications(sim_func : callable, N : int, target_score : int, randomiser : 
     return summary_dict
     
 
-
-
-# Run simulation
-
-T = 100 # Target score
-R = 1000 # Number of replications (figures in paper obtained from setting R = 10**6)
-
-
-strat_hold_20 = strategy_factory_1(20,T)
-opt_strat_1 = optimal_strategy_fact()
-opt_strat_2 = optimal_strategy_fact()
-
-rep_results_1 = replications(pig_sim, R, T, False, (opt_strat_1,opt_strat_2))
-rep_results_2 = replications(pig_sim, R, T, False, (opt_strat_1,strat_hold_20))
-rep_results_3 = replications(pig_sim, R, T, False, (strat_hold_20,opt_strat_1))
-rep_results_4 = replications(pig_sim, R, T, True, (strat_hold_20,opt_strat_1))
