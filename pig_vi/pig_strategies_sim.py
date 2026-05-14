@@ -17,20 +17,9 @@ import numpy as np
 
 from functools import partial
 from collections import Counter
-from itertools import combinations_with_replacement
 
 
 import pickle
-
-from pathlib import Path
-import pickle
-
-# folder containing this script
-BASE_DIR = Path(__file__).resolve().parent
-
-# full path to pickle file
-pkl_path = BASE_DIR / "pig_results.pkl"
-
 
 
 
@@ -130,7 +119,7 @@ def strategy_factory_1(M : int,target_score : int) -> callable:
 
 
 # Load pickle file
-with open(pkl_path, "rb") as f:
+with open("pig_results.pkl", "rb") as f:
     results = pickle.load(f)
 
 target = results["target"]
@@ -149,10 +138,15 @@ def optimal_strategy_fact() -> callable:
         turn_score = sum(play_hist) 
         opponents_score = all_scores[1-all_scores.index(current_score)] # Note the 1- switches the index of the player to the opponent when there are two players
         
-        if policy[(current_score,opponents_score,turn_score)] == 'roll':
-            return True
+        if (turn_score + current_score) >= 100:
+            val = False
         else:
-            return False
+            if policy[(current_score,opponents_score,turn_score)] == 'roll':
+                val = True
+            else:
+                val = False
+                
+        return val
     
     strat_opt.__name__ = "opt_strat"
 
@@ -187,12 +181,14 @@ def replications(sim_func : callable, N : int, target_score : int, randomiser : 
 # Run simulation
 
 T = 100 # Target score
-R = 1000 # Number of replications
+R = 1000000 # Number of replications
 
-strat_0 = strategy_factory_1(10,T)
-strat_1 = strategy_factory_1(20,T)
-strat_2 = strategy_factory_1(25,T)
+
+strat_hold_20 = strategy_factory_1(20,T)
 opt_strat_1 = optimal_strategy_fact()
 opt_strat_2 = optimal_strategy_fact()
 
-results_1 = pig_sim(T,False,(opt_strat_1,opt_strat_2))
+rep_results_1 = replications(pig_sim, R, T, False, (opt_strat_1,opt_strat_2))
+rep_results_2 = replications(pig_sim, R, T, False, (opt_strat_1,strat_hold_20))
+rep_results_3 = replications(pig_sim, R, T, False, (strat_hold_20,opt_strat_1))
+rep_results_4 = replications(pig_sim, R, T, True, (strat_hold_20,opt_strat_1))
