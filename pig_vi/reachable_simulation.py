@@ -9,13 +9,14 @@ from collections import Counter
 import matplotlib.pyplot as plt
 import pickle
 
+from pig_strategies_sim import *
 
 
 # Taken simulation setup from testing the optimal policy against hold_at strategies and adapted for finding reachable states using simulation
 np.random.seed(1)
 reachable_states = set()
 
-def pig_sim(target_score : int, random_order : bool, strategies : tuple[callable, ...]) -> int:
+def pig_sim_rs(target_score : int, random_order : bool, strategies : tuple[callable, ...]) -> int:
     """The argument strategies should be a tuple of functions representing different strategies, which return True to continue rolling and False to hold;
     target_score is the integer value a strategy must exceed first for it to win;
     random_order is a boolean value which when true will shuffle the strategies before simulation;
@@ -39,7 +40,7 @@ def pig_sim(target_score : int, random_order : bool, strategies : tuple[callable
     while all([(score < target_score) for score in score_list]):
         
         turn_details = zip(list(range(0,N)), ord_strategies,[score_list]*N)
-        score_list = list(map(lambda x,y: x+y, score_list, map(play_turn,turn_details)))
+        score_list = list(map(lambda x,y: x+y, score_list, map(play_turn_rs,turn_details)))
         
     # The winner is the one who reaches the target score first, so we choose the leftmost value which is at least the target score
     winning_score_index = (min([i for i in range(len(score_list)) if score_list[i] >= target_score]) + shift_int) % N
@@ -49,7 +50,7 @@ def pig_sim(target_score : int, random_order : bool, strategies : tuple[callable
 
 
     
-def play_turn(turn_details : tuple[callable,list]) -> int:
+def play_turn_rs(turn_details : tuple[callable,list]) -> int:
     """This function takes the current turn details (composed of the strategy we are playing and the current total score of the relevant player);
     this returns the integer value gained by the strategy in the turn (which of course is random)."""
     
@@ -91,24 +92,6 @@ def roll_dice() -> int:
     return np.random.randint(1,7)
 
 
-def strategy_factory_1(M : int,target_score : int) -> callable:
-
-    def strat_hold(score_hist : tuple[tuple,int]) -> bool:
-        """" The argument score_hist is a tuple where the first element is the previous rolls in the turn and the second element is the players overall score so far;
-        this strategy chooses to continue rolling until a total of at least M has been rolled in a single turn (or we exceed the target score)."""
-        
-        play_hist, current_score, all_scores = score_hist
-        turn_score = sum(play_hist) 
-        
-        # Check if we've reached the threshold M or exceeded the required overall target score
-        if (turn_score >= M) or (turn_score + current_score >= target_score): # Hold if we obtain more than M in the turn or if the total score is at least the target score
-            return False
-        else:
-            return True
-    
-    strat_hold.__name__ = "strat_hold_at_"+str(M)
-
-    return strat_hold
 
 
 
@@ -121,58 +104,11 @@ states = results["states"]
 values = results["values"]
 policy = results["policy"]
 
-def optimal_strategy_fact() -> callable:
-
-    def strat_opt(score_hist : tuple[tuple,int]) -> bool:
-        """Rolls and holds in accordance with the optimal strategy; 
-        note that this strategy is only suitable for two player games and when the target score is exactly 100"""
-        
-        
-        play_hist, current_score, opponents_score, all_scores = score_hist
-        turn_score = sum(play_hist) 
-
-        if (turn_score + current_score) >= 100:
-            val = False
-        else:
-            if policy[(current_score,opponents_score,turn_score)] == 'roll':
-                val = True
-            else:
-                val = False
-                
-        return val
-    
-    strat_opt.__name__ = "opt_strat"
-
-    return strat_opt
 
 
 def random_strategy(score_hist):
 
     return np.random.random() < 0.68
-
-
-def replications(sim_func : callable, N : int, target_score : int, randomiser : bool, strategies : tuple[callable, ...]) -> dict:
-    """N is the number of replications;
-    runs replications of rounds with all the strategies passed in as arguments, randomising the starting player;
-    allows for repeated strategies (i.e. strategies can be a tuple of functions pointing to the same underlying function);
-    the randomiser will randomly change the starting player in each round."""
-    
-    plays = [strategies] * N
-    part_sim_func = partial(sim_func,target_score,randomiser) # Fixes a simulation type with specific parameters
-    
-    results = list(map(part_sim_func,plays))
-    count_dict = Counter(results)
-    
-    summary_dict = dict()
-    
-    # Convert numbers to percentages and format for presenting in dictionary
-    for i in range(len(strategies)):
-        key = 'S'+str(i+1)+' '+'(' + strategies[i].__name__ + ')'
-        summary_dict[key] = 100 * count_dict[i] / N 
-    
-    return summary_dict
-    
-
 
 
 # Run simulation
@@ -181,7 +117,7 @@ T = 100
 R = 2000000
 
 opt_strat_1 = optimal_strategy_fact()
-rep_results = replications(pig_sim, R, T, False, (opt_strat_1, random_strategy))
+rep_results = replications(pig_sim_rs, R, T, False, (opt_strat_1, random_strategy))
 
 # Create the (i,j) space grid for the reachable states
 reachable_grid = np.zeros((100,100))
@@ -189,13 +125,6 @@ for i,j,k in reachable_states:
     reachable_grid[i,j] = 1
 
 # Save using pickle
-with open("reachable_states.pkl", "wb") as f:
+with open("rpig_vi/eachable_states.pkl", "wb") as f:
     pickle.dump(reachable_states, f)
 print("Saved.")
-
-# Plot to show what states are never used by the optimal policy
-plt.imshow(reachable_grid.T,origin="lower",cmap="Greys",extent=[0,100,0,100],aspect="equal")
-plt.xlabel("Player Score (i)")
-plt.ylabel("Opponent Score (j)")
-plt.title("Reachable Score Pairs")
-plt.show()
