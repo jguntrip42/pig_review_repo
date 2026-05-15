@@ -1,4 +1,4 @@
-#from pig_vi.pig import Pig
+
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
@@ -13,10 +13,6 @@ T = results["target"]
 main_values = results["values"]
 main_policy = results["policy"]
 
-#game = Pig(target=target)
-#game.values = values
-#game.policy = policy
-#T = game.target
 
 
 
