@@ -32,3 +32,14 @@ Install dependencies:
 ```bash
 pip install -r dependencies.txt
 ```
+
+
+## Repository Layout:
+
+This is a description of files included in the repository and how to use them. 
+
+- Papers - This includes the *"Optimal Play of the Dice Game Pig"* (Neller & Presser, 2004) and *"Re-run, Repeat, Reproduce, Reuse, Replicate: Transforming Code into Scientific Contributions"* (Benureau & Rougier, 2008) along with our report on the replication study.
+- pig_vi
+- plots
+- tests
+
