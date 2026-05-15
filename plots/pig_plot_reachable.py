@@ -173,7 +173,6 @@ plt.show()
 
 
 
-
 j_cross = 30
 Z_full = decision[:, j_cross, :]
 # Mask to see only the reachable states
