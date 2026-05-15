@@ -84,3 +84,23 @@ for n, (elev, azim, title) in enumerate(views, start=1):
 
 plt.tight_layout()
 plt.show()
+
+
+j = 30
+Z = decision[:, j, :]
+
+plt.figure(figsize=(8, 5))
+
+plt.contourf(Z.T, levels=[0.5, 1.0], colors=["0.80"], extent=[0, 100, 0, 100])
+plt.contour(Z.T, levels=[0.5], colors="black", linewidths=1.2, extent=[0, 100, 0, 100])
+
+plt.axhline(20, linestyle="--", color="black")
+
+plt.xlabel("Player 1 Score (i)")
+plt.ylabel("Turn Total (k)")
+plt.title("Figure 4. Cross-section, opponent score = 30")
+
+plt.xlim(0, 100)
+plt.ylim(0, 100)
+
+plt.show()
