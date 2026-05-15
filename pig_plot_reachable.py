@@ -1,28 +1,29 @@
-from pig_vi.pig import Pig
+#from pig_vi.pig import Pig
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
 
+import os.path
+
 # Load pickle file with results in it
-with open("pig_vi_results.pkl", "rb") as f:
+with open(os.path.dirname(__file__) + "/pig_vi_results.pkl", "rb") as f:
     results = pickle.load(f)
 
-target = results["target"]
-values = results["values"]
-policy = results["policy"]
+T = results["target"]
+main_values = results["values"]
+main_policy = results["policy"]
 
-game = Pig(target=target)
-game.values = values
-game.policy = policy
-T = game.target
-
+#game = Pig(target=target)
+#game.values = values
+#game.policy = policy
+#T = game.target
 
 
 
 
 # -----------------
 # First reachable rule, regarding the max k value a player can obtain in each (i,j) state
-def reachable_k_boundary_cross(game, j_cross):
+def reachable_k_boundary_cross(policy,j_cross):
     """
     Finds the reachable boundary of k for each player score i at a fixed crossection of j
     """
@@ -32,30 +33,30 @@ def reachable_k_boundary_cross(game, j_cross):
         k = 0
         
         # Iterate while the state isnt winning and the optimal policy says to roll
-        while (k < T - i and game.get_policy(i, j_cross, k) == "roll"):
+        while (k < T - i and policy[(i, j_cross, k)] == "roll"):
             # Largest possible increase in k
             k += 6
         reachable_boundary[i] = min(k, T - i)
 
     return reachable_boundary
 
-def reachable_k_boundary(game):
+def reachable_k_boundary(policy):
     """
     Finds the reachable boundary of k for each (i,j) intersection
     """
     boundary = np.full((T, T), np.nan)
     # Iterate across all crossections oj j
     for j_cross in range(T):
-        reachable_boundary = reachable_k_boundary_cross(game,j_cross=j_cross)
+        reachable_boundary = reachable_k_boundary_cross(policy,j_cross=j_cross)
         # Add each crossection to form the full boundary
         boundary[:, j_cross] = reachable_boundary
     return boundary
 
-reachable_boundary = reachable_k_boundary(game)
+reachable_boundary = reachable_k_boundary(main_policy)
 
 # ---------------------------------
 # Second reachable rule, finding the states the player cannot enter, using a simulation approach
-with open("reachable_states.pkl", "rb") as f:
+with open(os.path.dirname(__file__) + "/reachable_states.pkl", "rb") as f:
     reachable_states = pickle.load(f)
 
 # -----------------------------------
@@ -94,7 +95,7 @@ for i in range(T):
                 decision[i, j, k] = 1
 
             else:
-                if game.get_policy(i, j, k) == "hold":
+                if main_policy[(i, j, k)] == "hold":
                     decision[i, j, k] = 1
                 else:
                     decision[i, j, k] = 0
@@ -182,7 +183,6 @@ plt.ylabel("Turn Total (k)")
 plt.title(f"Figure 4. Cross-section, opponent score = {j_cross}")
 plt.xlim(0, 100)
 plt.ylim(0, 50)
-plt.legend()
 plt.show()
 
 
