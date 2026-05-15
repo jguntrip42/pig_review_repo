@@ -2,11 +2,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
-
-import os.path
+from collections import deque
 
 # Load pickle file with results in it
-with open(os.path.dirname(__file__) + "/pig_vi_results.pkl", "rb") as f:
+with open("pig_vi_results.pkl", "rb") as f:
     results = pickle.load(f)
 
 T = results["target"]
@@ -15,26 +14,43 @@ main_policy = results["policy"]
 
 
 
-
-
-# -----------------
 # First reachable rule, regarding the max k value a player can obtain in each (i,j) state
-def reachable_k_boundary_cross(policy,j_cross):
+def reachable_k_boundary_cross(game, j_cross):
     """
     Finds the reachable boundary of k for each player score i at a fixed crossection of j
     """
     reachable_boundary = np.full(T, np.nan)
+
     # Iterate through all player scores
     for i in range(T):
-        k = 0
-        
-        # Iterate while the state isnt winning and the optimal policy says to roll
-        while (k < T - i and policy[(i, j_cross, k)] == "roll"):
-            # Largest possible increase in k
-            k += 6
-        reachable_boundary[i] = min(k, T - i)
 
+        reachable_k = set([0])
+        queue = deque([0])
+        while queue:
+            k = queue.popleft()
+
+            if k >= T - i:
+                continue
+
+            if main_policy[(i, j_cross, k)] == "hold":
+                continue
+
+            for roll in [2, 3, 4, 5, 6]:
+                k_new = k + roll
+
+                if i + k_new >= T:
+                    reachable_k.add(T - i)
+                    continue
+
+                if k_new not in reachable_k:
+                    reachable_k.add(k_new)
+                    queue.append(k_new)
+
+        if len(reachable_k) > 0:
+            reachable_boundary[i] = max(reachable_k)
+           
     return reachable_boundary
+
 
 def reachable_k_boundary(policy):
     """

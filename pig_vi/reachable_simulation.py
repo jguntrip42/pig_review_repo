@@ -9,9 +9,6 @@ from collections import Counter
 import matplotlib.pyplot as plt
 import pickle
 
-import os.path
-
-
 
 
 # Taken simulation setup from testing the optimal policy against hold_at strategies and adapted for finding reachable states using simulation
@@ -116,7 +113,7 @@ def strategy_factory_1(M : int,target_score : int) -> callable:
 
 
 # Load pickle file with results in it
-with open(os.path.dirname(__file__) + "/pig_vi_results.pkl", "rb") as f:
+with open("pig_vi_results.pkl", "rb") as f:
     results = pickle.load(f)
 
 target = results["target"]
