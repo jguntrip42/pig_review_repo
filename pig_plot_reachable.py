@@ -52,7 +52,7 @@ reachable_boundary = reachable_k_boundary(main_policy)
 
 # ---------------------------------
 # Second reachable rule, finding the states the player cannot enter, using a simulation approach
-with open(os.path.dirname(__file__) + "/reachable_states.pkl", "rb") as f:
+with open("reachable_states.pkl", "rb") as f:
     reachable_states = pickle.load(f)
 
 # -----------------------------------

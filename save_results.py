@@ -1,6 +1,8 @@
 from pig_vi.pig import Pig
 import pickle 
 
+import os.path
+
 game = Pig(target=100)
 game.value_iteration(tolerance=1e-6, max_iterations=10000)
 
@@ -10,7 +12,7 @@ print("Policy at (0, 0, 0):", game.get_policy(0, 0, 0))
 
 
 results = {"target": game.target,"states": game.states,"values": game.values, "policy": game.policy}
-with open("pig_vi_results.pkl", "wb") as f:
+with open(os.path.dirname(__file__) + "/pig_vi/pig_vi_results.pkl", "wb") as f:
     pickle.dump(results, f)
 print("Results saved.")
 
