@@ -141,7 +141,7 @@ class Pig:
         else:
             return "hold", hold
 
-    def value_iteration(self, tolerance=1e-8, max_iterations=10000):
+    def value_iteration(self, tolerance=1e-8, max_iterations=10000, print_its=True):
         """
         Repeatedly update values until they stop changing much.
         """
@@ -160,8 +160,9 @@ class Pig:
 
                 if change > biggest_change:
                     biggest_change = change
-
-            print(f"Iteration {iteration}, biggest change = {biggest_change}")
+            
+            if print_its == True:
+                print(f"Iteration {iteration}, biggest change = {biggest_change}")
 
             if biggest_change < tolerance:
                 print("Converged!")
