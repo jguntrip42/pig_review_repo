@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import pickle
 from collections import deque
 
+
 # Load pickle file with results in it
 with open("pig_vi_results.pkl", "rb") as f:
     results = pickle.load(f)
@@ -11,7 +12,6 @@ with open("pig_vi_results.pkl", "rb") as f:
 T = results["target"]
 main_values = results["values"]
 main_policy = results["policy"]
-
 
 
 # First reachable rule, regarding the max k value a player can obtain in each (i,j) state
@@ -63,6 +63,8 @@ def reachable_k_boundary(policy):
         # Add each crossection to form the full boundary
         boundary[:, j_cross] = reachable_boundary
     return boundary
+
+reachable_boundary = reachable_k_boundary(main_policy)
 
 reachable_boundary = reachable_k_boundary(main_policy)
 
@@ -165,8 +167,6 @@ for n, (elev, azim, title) in enumerate(views, start=1):
 plt.tight_layout()
 
 plt.show()
-
-
 
 
 
