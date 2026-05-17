@@ -32,14 +32,34 @@ Install dependencies:
 ```bash
 pip install -r dependencies.txt
 ```
-
+This project was developed using:
+- Python 3.12
 
 ## Repository Layout:
 
-This is a description of files included in the repository and how to use them. 
+This is a description of files included in the repository. This repository was developed to work alongside the reproducability study performed and forms a structured layout of the appropriate scripts and documents in order to accurately reproduce our results and highlight the methodology to which the works of Neller and Presser was reproduced by.
 
-- Papers - This includes the *"Optimal Play of the Dice Game Pig"* (Neller & Presser, 2004) and *"Re-run, Repeat, Reproduce, Reuse, Replicate: Transforming Code into Scientific Contributions"* (Benureau & Rougier, 2008) along with our report on the replication study.
-- pig_vi
-- plots
-- tests
+```/papers``` - includes the *"Optimal Play of the Dice Game Pig"* (Neller & Presser, 2004) and *"Re-run, Repeat, Reproduce, Reuse, Replicate: Transforming Code into Scientific Contributions"* (Benureau & Rougier, 2008) along with our report on the replication study.
+```/pig_vi``` - includes the relevant files containing the executable functions and simulation results in order to reproduce the results in "Optimal Play of the Dice Game Pig".
+- ```/plots``` - includes scripts to produce the figures in "Optimal Play of the Dice Game Pig".
+- ```/tests``` - includes testing scripts for the application of value iteration to the game of Piglet and Pig.
+
+Running the simulations and value iteration scripts produces:
+
+- `pig_vi_results.pkl`
+  - Stored optimal policy and value function for the game of Pig.
+
+- `reachable_states.pkl`
+  - Simulation-based reachable states.
+    
+## Testing:
+
+Unit tests are available to validate the results of the value iteration algorithm applied to the relevant games of Piglet and Pig themselves. Piglet is tested by using a small target score of 2 and tests the correct handling of terminal states, recovery of the expected value assignment and optimal policy. The game of Pig is testd through the use of using perviously calculated results and verifying that the recovered policy acurately matches the stored policy.
+
+The tests can be executed using:
+
+```bash
+pytest
+```
+
 
