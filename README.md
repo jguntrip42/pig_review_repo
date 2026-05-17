@@ -40,9 +40,12 @@ This project was developed using:
 This is a description of files included in the repository. This repository was developed to work alongside the reproducability study performed and forms a structured layout of the appropriate scripts and documents in order to accurately reproduce our results and highlight the methodology to which the works of Neller and Presser was reproduced by.
 
 ```/papers``` - includes the *"Optimal Play of the Dice Game Pig"* (Neller & Presser, 2004) and *"Re-run, Repeat, Reproduce, Reuse, Replicate: Transforming Code into Scientific Contributions"* (Benureau & Rougier, 2008) along with our report on the replication study.
+
 ```/pig_vi``` - includes the relevant files containing the executable functions and simulation results in order to reproduce the results in "Optimal Play of the Dice Game Pig".
-- ```/plots``` - includes scripts to produce the figures in "Optimal Play of the Dice Game Pig".
-- ```/tests``` - includes testing scripts for the application of value iteration to the game of Piglet and Pig.
+
+ ```/plots``` - includes scripts to produce the figures in "Optimal Play of the Dice Game Pig".
+ 
+```/tests``` - includes testing scripts for the application of value iteration to the game of Piglet and Pig.
 
 Running the simulations and value iteration scripts produces:
 
