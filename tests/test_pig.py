@@ -19,7 +19,7 @@ def test_pig():
     
     main_policy = results["policy"]
     
-    game = Pig(target=T)
+    game = Pig(target=100)
     game.value_iteration(tolerance=1e-6, max_iterations=10000, print_its=True)
     
     assert game.policy == main_policy
