@@ -9,14 +9,13 @@ This respository aims to replicate the methodology and results from:
 
 ## Overview:
 
-This respository focuses on the implementation the value iteration algorithm in order to compute the optimal strategy for the dice game *Pig* as well as the simplified version *Piglet*, this is done to reproduce the results of the aforementioned paper, by focusing on reproducing their figures and findings. This includes:
+This repository focuses on the implementation the value iteration algorithm in order to compute the optimal strategy for the dice game *Pig* as well as the simplified version *Piglet*, this is done to reproduce the results of the aforementioned paper, by focusing on reproducing their figures and findings. This includes:
 - Computing the optimal policy and through the corresponding value.
 - Calculating and visualising the surface between the two possible actions "hold" and "roll".
 - Developing ways to reduce the analysed states to remove unreachable states.
 - Visualisation of the reachable state policy surface.
-- Calculating and visualising the winning proabilities and contours.
-
-
+- Calculating and visualising the winning probabilities and contours.
+The extent of reproducability is then explored through the use of the principles of the "5Rs" (Benureau and Rougier, 2018), analysing the original work of Neller and Presser through the lens of re-runability, repeatability, reproducibility, replicability and reusability.
 ---
 
 ## Installation and Setup:
@@ -34,6 +33,8 @@ pip install -r dependencies.txt
 ```
 This project was developed using:
 - Python 3.12
+
+---
 
 ## Repository Layout:
 
@@ -54,10 +55,13 @@ Running the simulations and value iteration scripts produces:
 
 - `reachable_states.pkl`
   - Simulation-based reachable states.
-    
+
+- Figure outputs within `/plots`.
+---
+  
 ## Testing:
 
-Unit tests are available to validate the results of the value iteration algorithm applied to the relevant games of Piglet and Pig themselves. Piglet is tested by using a small target score of 2 and tests the correct handling of terminal states, recovery of the expected value assignment and optimal policy. The game of Pig is testd through the use of using perviously calculated results and verifying that the recovered policy acurately matches the stored policy.
+Unit tests are available to validate the results of the value iteration algorithm applied to the relevant games of Piglet and Pig themselves. Piglet is tested by using a small target score of 2 and tests the correct handling of terminal states, recovery of the expected value assignment and optimal policy. The game of Pig is tested through the use of using previously calculated results and verifying that the recovered policy ascurately matches the stored policy.
 
 The tests can be executed using:
 
@@ -65,4 +69,12 @@ The tests can be executed using:
 pytest
 ```
 
+---
 
+## References
+
+Neller, T. W., & Presser, C. G. (2004).  
+*Optimal Play of the Dice Game Pig.*
+
+Benureau, F. C. Y., & Rougier, N. P. (2018).  
+*Re-run, Repeat, Reproduce, Reuse, Replicate: Transforming Code into Scientific Contributions.*
