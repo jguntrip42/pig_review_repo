@@ -59,7 +59,14 @@ Running the simulations and value iteration scripts produces:
 
 - Figure outputs within `/plots`.
 ---
-  
+## Usage:
+
+After installing the dependencies, the main scripts can be run to reproduce the value-iteration results, figures, and simulations used in the report.
+
+The Piglet implementation is used as a small validation case. It checks that value iteration recovers the exact values reported by Neller and Presser for target score 2.
+
+The full Pig implementation computes the optimal value function and roll/hold policy for target score 100. These results are then saved and used to generate the policy boundary plots, reachable-state plots, contour plots, and simulation comparisons.
+
 ## Testing:
 
 Unit tests are available to validate the results of the value iteration algorithm applied to the relevant games of Piglet and Pig themselves. Piglet is tested by using a small target score of 2 and tests the correct handling of terminal states, recovery of the expected value assignment and optimal policy. The game of Pig is tested through the use of using previously calculated results and verifying that the recovered policy ascurately matches the stored policy.
