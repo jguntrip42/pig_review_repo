@@ -92,7 +92,7 @@ This saves the computed Pig value function and optimal policy to:
 ```text
 pig_vi_results.pkl
 ```
-
+---
 ## Testing:
 
 Unit tests are available to validate the results of the value iteration algorithm applied to the relevant games of Piglet and Pig themselves. Piglet is tested by using a small target score of 2 and tests the correct handling of terminal states, recovery of the expected value assignment and optimal policy. The game of Pig is tested through the use of using previously calculated results and verifying that the recovered policy ascurately matches the stored policy.
