@@ -33,7 +33,7 @@ Install dependencies:
 pip install -r dependencies.txt
 ```
 This project was developed using:
-- Python 3.12
+- Python 3.13
 
 ---
 
