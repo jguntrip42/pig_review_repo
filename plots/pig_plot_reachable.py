@@ -6,9 +6,9 @@ from collections import deque
 
 
 # Load pickle file with results in it
-with open("pig_vi_results.pkl", "rb") as f:
+with open("../pig_vi/pig_vi_results.pkl", "rb") as f:
     results = pickle.load(f)
-
+    
 T = results["target"]
 main_values = results["values"]
 main_policy = results["policy"]
@@ -66,11 +66,9 @@ def reachable_k_boundary(policy):
 
 reachable_boundary = reachable_k_boundary(main_policy)
 
-reachable_boundary = reachable_k_boundary(main_policy)
-
 # ---------------------------------
 # Second reachable rule, finding the states the player cannot enter, using a simulation approach
-with open("reachable_states.pkl", "rb") as f:
+with open("../pig_vi/reachable_states.pkl", "rb") as f:
     reachable_states = pickle.load(f)
 
 # -----------------------------------
@@ -168,6 +166,42 @@ plt.tight_layout()
 
 plt.show()
 
+
+
+# Plot from a birds-eye view as well to see reachable states
+fig = plt.figure(figsize=(8, 8))
+
+ax = fig.add_subplot(111, projection="3d")
+
+ax.voxels(
+    roll_reachable,
+    facecolors="0.5",
+    edgecolor="k",
+    linewidth=0.02
+)
+
+ax.set_xlim(0, 100)
+ax.set_ylim(0, 100)
+ax.set_zlim(0, 100)
+
+ax.set_xlabel("Player 1 Score (i)")
+ax.set_ylabel("Player 2 Score (j)")
+ax.set_zlabel("Turn Total (k)")
+
+ax.set_xticks([0, 100])
+ax.set_yticks([0, 100])
+ax.set_zticks([0, 100])
+
+# Birds-eye view plot
+ax.view_init(elev=90, azim=-90)
+
+ax.grid(False)
+
+ax.set_box_aspect((1,1,1))
+
+plt.tight_layout()
+
+plt.show()
 
 
 
