@@ -90,7 +90,7 @@ save_results(T=100, tol=1e-8)
 This saves the computed Pig value function and optimal policy to:
 
 ```text
-pig_vi/pig_vi_results.pkl
+pig_vi_results.pkl
 ```
 
 ## Testing:
