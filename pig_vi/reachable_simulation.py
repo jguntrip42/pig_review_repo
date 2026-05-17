@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import pickle
 
 def sim_and_save_reachable_states(policy):
+    """This function simulates the optimal policy playing a random policy for the game Pig with a target score of 100 over 2000000 replications"""
     
     # Taken simulation setup from testing the optimal policy against hold_at strategies and adapted for finding reachable states using simulation
     np.random.seed(1)

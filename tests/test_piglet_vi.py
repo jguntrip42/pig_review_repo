@@ -46,6 +46,7 @@ def R_piglet(s_new,s,a):
 
 
 def test_1():
+    """Checks we obtain the correct policy and values for the Piglet value iteration algorithm"""
     
     new_policy,val_map_0,val_dict_0 = piglet_val_iteration(piglet_states,piglet_actions,P_piglet,R_piglet,target,0.00001)
     
