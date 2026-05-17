@@ -2,7 +2,7 @@
 
 **Authors:** Joseph Guntrip, Kyle Russell, Tina Sardashti, Jay Styles
 
-This respository aims to replicate the methodology and results from:  
+This repository aims to replicate the methodology and results from:  
 *"Optimal Play of the Dice Game Pig"* (Neller & Presser, 2004)
 
 ---
@@ -10,13 +10,13 @@ This respository aims to replicate the methodology and results from:
 ## Overview:
 
 This repository focuses on the implementation the value iteration algorithm in order to compute the optimal strategy for the dice game *Pig* as well as the simplified version *Piglet*, this is done to reproduce the results of the aforementioned paper, by focusing on reproducing their figures and findings. This includes:
-- Computing the optimal policy and through the corresponding value.
+- Computing the optimal policy and the corresponding value function.
 - Calculating and visualising the surface between the two possible actions "hold" and "roll".
 - Developing ways to reduce the analysed states to remove unreachable states.
 - Visualisation of the reachable state policy surface.
 - Calculating and visualising the winning probabilities and contours.
 
-  The extent of reproducability is then explored through the use of the principles of the "5Rs" (Benureau and Rougier, 2018), analysing the original work of Neller and Presser through the lens of re-runability, repeatability, reproducibility, replicability and reusability.
+  The extent of reproducibility is then explored through the use of the principles of the "5Rs" (Benureau and Rougier, 2018), analysing the original work of Neller and Presser through the lens of re-runability, repeatability, reproducibility, replicability and reusability.
 ---
 
 ## Installation and Setup:
@@ -39,9 +39,9 @@ This project was developed using:
 
 ## Repository Layout:
 
-This is a description of files included in the repository. This repository was developed to work alongside the reproducability study performed and forms a structured layout of the appropriate scripts and documents in order to accurately reproduce our results and highlight the methodology to which the works of Neller and Presser was reproduced by.
+This is a description of files included in the repository. This repository was developed to work alongside the reproducibility study performed and forms a structured layout of the appropriate scripts and documents in order to accurately reproduce our results and highlight the methodology to which the works of Neller and Presser was reproduced by.
 
-```/papers``` - includes the *"Optimal Play of the Dice Game Pig"* (Neller & Presser, 2004) and *"Re-run, Repeat, Reproduce, Reuse, Replicate: Transforming Code into Scientific Contributions"* (Benureau & Rougier, 2008) along with our report on the replication study.
+```/papers``` - includes the *"Optimal Play of the Dice Game Pig"* (Neller & Presser, 2004) and *"Re-run, Repeat, Reproduce, Reuse, Replicate: Transforming Code into Scientific Contributions"* (Benureau & Rougier, 2018) along with our report on the replication study.
 
 ```/pig_vi``` - includes the relevant files containing the executable functions and simulation results in order to reproduce the results in "Optimal Play of the Dice Game Pig".
 
