@@ -59,7 +59,7 @@ Running the simulations and value iteration scripts produces:
 
 - Figure outputs within `/plots`.
 ---
-Main Functions:
+## Main Functions:
 The main value-iteration code is in the `/pig_vi` directory.
 
 `piglet_val_iteration(...)` runs value iteration for the simplified Piglet game. It returns the final value map, the optimal policy, and the value history used for the convergence plot.
@@ -71,7 +71,7 @@ The main value-iteration code is in the `/pig_vi` directory.
 The plotting and simulation scripts use these saved results to reproduce the figures and numerical comparisons in the report.
 
 ---
-## Usage
+## Usage:
 
 After installing the dependencies, the main scripts can be run to reproduce the value-iteration results, figures, and simulations used in the report.
 
