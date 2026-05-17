@@ -27,6 +27,7 @@ classifiers = [
 dependencies = [
     "numpy",
     "matplotlib",
+    "scipy",
     "scikit-image"
 ]
 
