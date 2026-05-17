@@ -7,6 +7,7 @@ Created on Sun May 17 09:36:38 2026
 """
 
 from pig_vi.pig import *
+import pickle
 
 
 def test_pig():
