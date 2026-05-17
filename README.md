@@ -15,6 +15,7 @@ This repository focuses on the implementation the value iteration algorithm in o
 - Developing ways to reduce the analysed states to remove unreachable states.
 - Visualisation of the reachable state policy surface.
 - Calculating and visualising the winning probabilities and contours.
+
 The extent of reproducability is then explored through the use of the principles of the "5Rs" (Benureau and Rougier, 2018), analysing the original work of Neller and Presser through the lens of re-runability, repeatability, reproducibility, replicability and reusability.
 ---
 
