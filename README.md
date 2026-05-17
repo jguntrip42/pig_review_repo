@@ -59,13 +59,39 @@ Running the simulations and value iteration scripts produces:
 
 - Figure outputs within `/plots`.
 ---
-## Usage:
+## Usage
 
 After installing the dependencies, the main scripts can be run to reproduce the value-iteration results, figures, and simulations used in the report.
 
 The Piglet implementation is used as a small validation case. It checks that value iteration recovers the exact values reported by Neller and Presser for target score 2.
 
 The full Pig implementation computes the optimal value function and roll/hold policy for target score 100. These results are then saved and used to generate the policy boundary plots, reachable-state plots, contour plots, and simulation comparisons.
+
+The **Piglet** value iteration can be run as follows:
+
+```python
+from pig_vi.piglet_vi import piglet_val_iteration
+
+policy_map, value_map, value_history = piglet_val_iteration(
+    S, A, P, R, T=2, epsilon=1e-6
+)
+```
+
+Here, `S`, `A`, `P`, and `R` are the Piglet state list, action list, transition function, and reward function. The function returns the optimal policy, final value map, and convergence history.
+
+The **Pig** value iteration can be run and saved as follows:
+
+```python
+from pig_vi.run_pig import save_results
+
+save_results(T=100, tol=1e-8)
+```
+
+This saves the computed Pig value function and optimal policy to:
+
+```text
+pig_vi/pig_vi_results.pkl
+```
 
 ## Testing:
 
