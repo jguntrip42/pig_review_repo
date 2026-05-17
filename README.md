@@ -73,8 +73,7 @@ The **Piglet** value iteration can be run as follows:
 from pig_vi.piglet_vi import piglet_val_iteration
 
 policy_map, value_map, value_history = piglet_val_iteration(
-    S, A, P, R, T=2, epsilon=1e-6
-)
+    S, A, P, R, T=2, epsilon=1e-6)
 ```
 
 Here, `S`, `A`, `P`, and `R` are the Piglet state list, action list, transition function, and reward function. The function returns the optimal policy, final value map, and convergence history.
